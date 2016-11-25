@@ -2,8 +2,10 @@
   "name": "google-forms-reader",
   "version": "0.1.0",
   "description": "Grab and organise Google Forms data from the associated Google Sheet",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "transpile": "babel src --out-dir lib",
+    "prepublish": "npm run transpile",
     "test": "ava --watch"
   },
   "repository": {
@@ -24,6 +26,7 @@
   "homepage": "https://github.com/richchurcher/google-forms-reader#readme",
   "devDependencies": {
     "ava": "^0.17.0",
+    "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.18.0",
@@ -38,5 +41,8 @@
     "dotenv": "^2.0.0",
     "google-auth-library": "^0.9.10",
     "googleapis": "^14.2.0"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
