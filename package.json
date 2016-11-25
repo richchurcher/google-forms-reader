@@ -1,0 +1,25 @@
+{
+  "name": "google-forms-reader",
+  "version": "0.1.0",
+  "description": "Grab and organise Google Forms data from the associated Google Sheet",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richchurcher/google-forms-reader.git"
+  },
+  "keywords": [
+    "google",
+    "forms",
+    "read",
+    "sheet"
+  ],
+  "author": "Rich Churcher",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/richchurcher/google-forms-reader/issues"
+  },
+  "homepage": "https://github.com/richchurcher/google-forms-reader#readme"
+}
