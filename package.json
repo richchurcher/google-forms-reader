@@ -16,7 +16,7 @@
     "google",
     "forms",
     "read",
-    "sheet"
+    "sheets"
   ],
   "author": "Rich Churcher",
   "license": "Apache-2.0",
@@ -44,5 +44,29 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "ava": {
+    "tap": true,
+    "require": [
+      "babel-register",
+      "dotenv/config"
+    ],
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  },
+  "engines": {
+    "node": ">= 7.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "lambci": {
+    "cmd": "nave use 7 bash -c 'npm install && npm test'"
+  }
 }
