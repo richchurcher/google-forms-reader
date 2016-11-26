@@ -1,4 +1,4 @@
-export default function parseForm (raw) {
+export function parseForm (raw) {
   const answers = raw.rowData.slice(1)
   return {
     questions:
@@ -12,11 +12,11 @@ export default function parseForm (raw) {
   }
 }
 
-export function getQuestion (columnHeader) {
-  const parts = /([\d]*\.?[\d]*) (.*)/.exec(columnHeader.userEnteredValue.stringValue)
+export function getQuestion ({ userEnteredValue: {stringValue} }) {
+  const parts = /^([\d]*\.?[\d]*) (.*)$/.exec(stringValue)
   if (parts) {
     const [_, designator, title] = parts
     return { designator, title }
   }
-  return { title: columnHeader }
+  return { title: stringValue }
 }

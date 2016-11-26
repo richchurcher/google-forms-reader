@@ -1,5 +1,29 @@
 import test from 'ava'
-import parseForm from '../src/parseForm'
+import {getQuestion, parseForm} from '../src/parseForm'
+
+test('getQuestion sets designator and title correctly', t => {
+  const raw = { userEnteredValue: { stringValue: '1111.911 Who flung dung?' } }
+  const expected = {
+    designator: '1111.911',
+    title: 'Who flung dung?'
+  }
+  const actual = getQuestion(raw)
+  t.deepEqual(expected, actual)
+})
+
+test('getQuestion does not set designator if malformed', t => {
+  const raw = { userEnteredValue: { stringValue: '1Afb3,9 Who flung dung?' } }
+  const expected = { title: '1Afb3,9 Who flung dung?' }
+  const actual = getQuestion(raw)
+  t.deepEqual(expected, actual)
+})
+
+test('getQuestion does not set designator if missing', t => {
+  const raw = { userEnteredValue: { stringValue: 'Who flung dung?' } }
+  const expected = { title: 'Who flung dung?' }
+  const actual = getQuestion(raw)
+  t.deepEqual(expected, actual)
+})
 
 test('parseForm aggregates answers by column', t => {
   const raw = {
