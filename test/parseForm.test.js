@@ -1,5 +1,5 @@
 import test from 'ava'
-import {getQuestion, getTrackingAnswers, parseForm} from '../src/parseForm'
+import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm} from '../src/parseForm'
 
 test.beforeEach(t => {
   t.context.raw = {
@@ -57,21 +57,9 @@ test('getQuestion does not set designator if missing', t => {
 test('parseForm aggregates answers by column', t => {
   const expected = {
     questions: [
-      {
-        designator: '1.0',
-        title: 'Who flung dung?',
-        answers: ['I did', 'They did']
-      },
-      {
-        designator: '1.2',
-        title: 'GitHub',
-        answers: ['richchurcher', 'someone']
-      },
-      {
-        designator: '5.2',
-        title: 'Was dung flung at all?',
-        answers: ['Yes', 'Yes']
-      }
+      { designator: '1.0', title: 'Who flung dung?', answers: ['I did', 'They did'] },
+      { designator: '1.2', title: 'GitHub', answers: ['richchurcher', 'someone'] },
+      { designator: '5.2', title: 'Was dung flung at all?', answers: ['Yes', 'Yes'] }
     ]
   }
   const actual = parseForm(t.context.raw)
@@ -137,4 +125,18 @@ test('getTrackingAnswers returns question:answer couplets', t => {
   ]
   const actual = getTrackingAnswers(trackByQuestion, answers)
   t.deepEqual(expected, actual)
+})
+
+test('attachTrackingAnswers adds all tracking answers', t => {
+  const trackingAnswers = [
+    [ { 'GitHub': 'richchurcher' }, { 'GitHub': 'someone' } ],
+    [ { 'Age': 78 }, { 'Age': 22 } ]
+  ]
+  const question = { designator: '1.0', title: 'Who flung dung?', answers: ['I did', 'They did'] }
+  const expected = [
+    { answer: 'I did', 'GitHub': 'richchurcher', 'Age': 78 },
+    { answer: 'They did', 'GitHub': 'someone', 'Age': 22 }
+  ]
+  const actual = attachTrackingAnswers(question, trackingAnswers)
+  t.deepEqual(actual.answers, expected)
 })
