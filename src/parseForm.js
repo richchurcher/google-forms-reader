@@ -15,6 +15,14 @@ export function parseForm (raw, options) {
         questions: questions.map(question => attachTrackingAnswers(question, trackingAnswers))
       }
     }
+    if (options.groupByDesignator) {
+      const groupBy = headers.find(({designator}) => options.groupByDesignator === designator)
+      if (groupBy) {
+        const out = {}
+        out[groupBy.title] = getAnswersGroupedBy(groupBy, headers, rawAnswers)
+        return out
+      }
+    }
   }
   return { questions }
 }
@@ -52,4 +60,20 @@ export function attachTrackingAnswers ({designator, title, answers}, trackingAns
     title,
     answers: answersWithTracking
   }
+}
+
+export function getAnswersGroupedBy (groupBy, headers, rawAnswers) {
+  return rawAnswers.map(row => {
+    const answer = {}
+    const title = row.values[groupBy.col].userEnteredValue.stringValue
+    const questions = headers.map(({designator, title}, col) => {
+      return {
+        designator,
+        title,
+        answer: row.values[col].userEnteredValue.stringValue
+      }
+    })
+    answer[title] = { questions }
+    return answer
+  })
 }

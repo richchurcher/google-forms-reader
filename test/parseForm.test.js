@@ -140,3 +140,32 @@ test('attachTrackingAnswers adds all tracking answers', t => {
   const actual = attachTrackingAnswers(question, trackingAnswers)
   t.deepEqual(actual.answers, expected)
 })
+
+test('parseForm groups by designator', t => {
+  const expected = {
+    'GitHub': [
+      {
+        'richchurcher': {
+          questions: [
+            { designator: '1.0', title: 'Who flung dung?', answer: 'I did' },
+            { designator: '1.2', title: 'GitHub', answer: 'richchurcher' },
+            { designator: '5.2', title: 'Was dung flung at all?', answer: 'Yes' }
+          ]
+        }
+      },
+      {
+        'someone': {
+          questions: [
+            { designator: '1.0', title: 'Who flung dung?', answer: 'They did' },
+            { designator: '1.2', title: 'GitHub', answer: 'someone' },
+            { designator: '5.2', title: 'Was dung flung at all?', answer: 'Yes' }
+          ]
+        }
+      }
+    ]
+  }
+  const actual = parseForm(t.context.raw, {
+    groupByDesignator: '1.2'
+  })
+  t.deepEqual(expected, actual)
+})
