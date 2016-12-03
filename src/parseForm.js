@@ -1,3 +1,21 @@
+import {compose} from 'ramda'
+
+export const splitHeaders = (options, raw) => ''
+export const groupByDesignators = form => form
+export const trackByDesignators = form => form
+export const getQuestions = form => form
+export const getRawAnswers = form => form
+export const getRealAnswers = form => form
+
+export const parseFormR = compose(
+  groupByDesignators,
+  trackByDesignators,
+  getQuestions,
+  getRealAnswers,
+  getRawAnswers,
+  splitHeaders
+)
+
 export function parseForm (raw, options) {
   const rawAnswers = raw.rowData.slice(1)
   const headers = raw.rowData[0].values.map((header, col) => getQuestion(header, col))

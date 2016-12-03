@@ -1,5 +1,5 @@
 import test from 'ava'
-import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm} from '../src/parseForm'
+import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR} from '../src/parseForm'
 
 test.beforeEach(t => {
   t.context.raw = {
@@ -169,3 +169,16 @@ test('parseForm groups by designator', t => {
   })
   t.deepEqual(expected, actual)
 })
+
+test.only('parseFormR aggregates answers by column', t => {
+  const expected = {
+    questions: [
+      { designator: '1.0', title: 'Who flung dung?', answers: ['I did', 'They did'] },
+      { designator: '1.2', title: 'GitHub', answers: ['richchurcher', 'someone'] },
+      { designator: '5.2', title: 'Was dung flung at all?', answers: ['Yes', 'Yes'] }
+    ]
+  }
+  const actual = parseFormR(1, 1)
+  t.deepEqual(expected, actual)
+})
+
