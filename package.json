@@ -49,8 +49,7 @@
   "ava": {
     "tap": true,
     "require": [
-      "babel-register",
-      "dotenv/config"
+      "babel-register"
     ],
     "babel": "inherit"
   },
