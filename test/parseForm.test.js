@@ -1,5 +1,5 @@
 import test from 'ava'
-import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR, getHeader} from '../src/parseForm'
+import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR, splitHeaders} from '../src/parseForm'
 
 test.beforeEach(t => {
   t.context.raw = {
@@ -182,25 +182,12 @@ test('parseFormR aggregates answers by column', t => {
   t.deepEqual(expected, actual)
 })
 
-test.only('getHeader identifies designator when present', t => {
-  const expected = {
-    col: 0,
-    designator: '1.0',
-    title: 'Who flung dung?'
-  }
-  const actual = getHeader({
-    userEnteredValue: {
-      stringValue: '1.0 Who flung dung?'
-    }
-  }, 0)
+test.only('splitHeaders sets correct headers object', t => {
+  const expected = [
+    { col: 0, designator: '1.0', title: 'Who flung dung?' },
+    { col: 1, designator: '1.2', title: 'GitHub' },
+    { col: 2, designator: '5.2', title: 'Was dung flung at all?' }
+  ]
+  const actual = splitHeaders(null, t.context.raw).headers
   t.deepEqual(expected, actual)
-})
-
-test.only('getHeader does not set designator when absent', t => {
-  const actual = getHeader({
-    userEnteredValue: {
-      stringValue: 'Who flung dung?'
-    }
-  }, 0)
-  t.falsy(actual.hasOwnProperty('designator'))
 })
