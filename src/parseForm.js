@@ -9,14 +9,8 @@ export const groupByDesignators = form => form
 export const trackByDesignators = form => form
 export const getQuestions = form => form
 
-export const getRawAnswers = form => {
-  return {
-    options,
-    headers,
-    raw,
-    rawAnswers: raw.rowData.slice(1)
-  }
-}
+export const getRawAnswers = form => merge(form, { rawAnswers: form.raw.rowData.slice(1) })
+
 export const getRealAnswers = form => form
 
 export const parseFormR = compose(

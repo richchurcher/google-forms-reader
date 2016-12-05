@@ -1,5 +1,5 @@
 import test from 'ava'
-import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR, splitHeaders} from '../src/parseForm'
+import {attachTrackingAnswers, getQuestion, getTrackingAnswers, getRawAnswers, parseForm, parseFormR, splitHeaders} from '../src/parseForm'
 
 test.beforeEach(t => {
   t.context.raw = {
@@ -182,7 +182,7 @@ test('parseFormR aggregates answers by column', t => {
   t.deepEqual(expected, actual)
 })
 
-test.only('splitHeaders sets correct headers object', t => {
+test('splitHeaders sets correct headers property', t => {
   const expected = [
     { col: 0, designator: '1.0', title: 'Who flung dung?' },
     { col: 1, designator: '1.2', title: 'GitHub' },
@@ -190,4 +190,13 @@ test.only('splitHeaders sets correct headers object', t => {
   ]
   const actual = splitHeaders(null, t.context.raw).headers
   t.deepEqual(expected, actual)
+})
+
+test.only('getRawAnswers omits headers row', t => {
+  const form = {
+    raw: {
+      rowData: [{}, {}]
+    }
+  }
+  t.is(getRawAnswers(form).rawAnswers.length, 1)
 })
