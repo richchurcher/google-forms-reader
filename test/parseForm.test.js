@@ -195,3 +195,12 @@ test.only('getHeader identifies designator when present', t => {
   }, 0)
   t.deepEqual(expected, actual)
 })
+
+test.only('getHeader does not set designator when absent', t => {
+  const actual = getHeader({
+    userEnteredValue: {
+      stringValue: 'Who flung dung?'
+    }
+  }, 0)
+  t.falsy(actual.hasOwnProperty('designator'))
+})
