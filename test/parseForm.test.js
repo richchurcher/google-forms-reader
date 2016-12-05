@@ -1,5 +1,5 @@
 import test from 'ava'
-import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR} from '../src/parseForm'
+import {attachTrackingAnswers, getQuestion, getTrackingAnswers, parseForm, parseFormR, getHeader} from '../src/parseForm'
 
 test.beforeEach(t => {
   t.context.raw = {
@@ -170,7 +170,7 @@ test('parseForm groups by designator', t => {
   t.deepEqual(expected, actual)
 })
 
-test.only('parseFormR aggregates answers by column', t => {
+test('parseFormR aggregates answers by column', t => {
   const expected = {
     questions: [
       { designator: '1.0', title: 'Who flung dung?', answers: ['I did', 'They did'] },
@@ -178,7 +178,20 @@ test.only('parseFormR aggregates answers by column', t => {
       { designator: '5.2', title: 'Was dung flung at all?', answers: ['Yes', 'Yes'] }
     ]
   }
-  const actual = parseFormR(1, 1)
+  const actual = parseFormR(null, t.context.raw)
   t.deepEqual(expected, actual)
 })
 
+test.only('getHeader identifies designator when present', t => {
+  const expected = {
+    col: 0,
+    designator: '1.0',
+    title: 'Who flung dung?'
+  }
+  const actual = getHeader({
+    userEnteredValue: {
+      stringValue: '1.0 Who flung dung?'
+    }
+  }, 0)
+  t.deepEqual(expected, actual)
+})

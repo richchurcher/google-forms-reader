@@ -1,6 +1,12 @@
-import {compose} from 'ramda'
+import {compose, merge} from 'ramda'
 
-export const splitHeaders = (options, raw) => ''
+export const getHeader = (header, col) => getQuestion(header, col)
+
+export const splitHeaders = (options, raw) => {
+  const headers = raw.rowData[0].values.map(getHeader)
+  return merge({ options, headers }, raw)
+}
+
 export const groupByDesignators = form => form
 export const trackByDesignators = form => form
 export const getQuestions = form => form
